@@ -9,11 +9,13 @@ export function parse(program) {
       program = program.slice(match[0].length);
       return parseRelativeClause(creature, skipSpaceOrComment(program));
     } else {
-      throw new SyntaxError("Expected 'hen' or 'egg' after 'a' or 'an'");
+      throw new SyntaxError(
+        "Invalid token: Expected 'hen' or 'egg' after 'a' or 'an'"
+      );
     }
   } else {
     throw new SyntaxError(
-      "Expected 'a' or 'an' at the beginning of the phrase"
+      "Invalid program: Expected 'a' or 'an' at the beginning of the phrase"
     );
   }
 }
@@ -45,13 +47,13 @@ function parseRelativeClause(creature, program) {
     }
   } else {
     throw new SyntaxError(
-      "Expected a relational keyword (which, that, has, is in)"
+      "Invalid token: Expected a relational keyword after identifier (which, that, has, is in)"
     );
   }
 }
 
 function skipSpaceOrComment(string) {
-  let skippable = /^(\s|-(.*?)-)*/.exec(string);
+  let skippable = /^(\s|#.*)*/.exec(string);
   return string.slice(skippable[0].length);
 }
 
